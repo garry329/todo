@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TODO APP</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="page-header col-sm-offset-5">
+  <h1 class="heading">My To-Do App</h1>
+</div>
+</div>
+
+  <div class="well col-lg-4 col-lg-offset-4">
+
+<form class="form-horizontal" action="/add" method="POST">
+  <div class="form-group">
+    <label class="control-label col-sm-offset-2 col-sm-3 bold" for="email">Add Task</label>
+
+    <div class="col-sm-4">
+      <input type="text" name="task" class="form-control" id="email" placeholder="Write your Task here">
+    </div>
+  </div>
+  <div class="form-group"> 
+    <div class="col-sm-offset-5 col-sm-10">
+      <div class="checkbox">
+        <label><input type="checkbox" value = "important" name = "important" class="normal">Important</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" value = "urgent" name = "urgent" class="normal">Urgent</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group"> 
+    <div class="col-sm-offset-5 col-sm-10">
+      <button  type="submit" value="Add Task" /class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+    </div>
+  </div>
+</form>
+</div>
+
+<div class="well col-lg-4 col-lg-offset-4">
+<div class="container">
+<div class="row">
+  <div class=" col-lg-4 col-sm-offset-1">
+<ul class="list-group">
+<h1 class="heading">Your To-Do List</h1>
+
+<% tasks.each do |todo| %>
+<% if todo.done %>
+<% if todo.important == "important" && todo.urgent=="urgent" %>
+<li class="strikethrough , list-group-item list-group-item-danger">
+<% elsif todo.important == "important" %>
+<li class="strikethrough , list-group-item list-group-item-warning">
+  
+  <% elsif todo.urgent=="urgent" %>
+<li class="strikethrough , list-group-item list-group-item-info">
+  <%else%>
+<li class="strikethrough , list-group-item list-group-item-success">
+  <%end%>
+<% else %>
+<% if todo.important == "important" && todo.urgent=="urgent" %>
+<li class="list-group-item list-group-item-danger">
+<% elsif todo.important == "important" %>
+<li class="list-group-item list-group-item-warning">
+  
+  <% elsif todo.urgent=="urgent" %>
+<li class="list-group-item list-group-item-info">
+  <%else%>
+<li class="list-group-item list-group-item-success">
+  <%end%>
+<% end %>
+
+
+<div class="font">
+<%= todo.task %>
+</div>
+<form action="/done" method="POST">
+
+<input type="hidden" name="task" value="<%= todo.task %>">
+<% if todo.done %>
+<div class="row">
+<div class="col-sm-1 col-sm-offset-10">
+<button  type="submit" value="Completed" /class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
+</div>
+</div>
+<% else %>
+<div class="row">
+<div class="col-sm-1 col-sm-offset-10">
+<button  type="submit" value="Completed" /class="btn btn-default"><span class="glyphicon glyphicon-ok"></span></button>
+
+</div>
+</div>
+<% end %>
+
+</form>
+
+</li>
+
+<% end %>
+
+</ul>
+</div>
+</div>
+</div>
+</div>
+<style type="text/css">
+.strikethrough {
+  text-decoration: line-through;
+}
+.font{
+  font-family:"Times New Roman", Times, serif;
+  font-size:25px; 
+}
+.heading{
+  font-family:"Times New Roman", Times, serif;
+  font-size:50px; 
+
+}
+  .checkbox{
+font-family:"Times New Roman", Times, sans-serif;
+  font-size:17px; 
+font-weight: bolder;
+  }
+  .bold{
+    font-size:21px;
+  }
+</style>
+
+
+</body>
+</html>

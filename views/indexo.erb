@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Todo App</title>
+</head>
+<body>
+<form action="/add" method="POST">
+	<!--THE ACTION ATTRIBUTE IN THIS FORM CALLS THE POST ADD METHOD IN THE APP.RB FILE-->
+
+<input type="text" name="task" />
+<!--TASK ACTS A PARAMETER WHICH CAN BE ACCESED USING PARAMS AS DONE IN THE APP.RB FILE -->
+<br>
+
+<input type="submit" value="Add Task" />
+<!--THIS FORMS THE SUBMIT BUTTON AND THE VALUE FORMS THE TEXT THAT IS DISPLAYED IN THE SUBMIT BUTTON -->
+
+</form>
+<!--THIS MARKS THE ENDING OF THE ADD TASK SECTION USING WHICH WE ADD TASKS TO THE LIST -->
+<ul>
+<% tasks.each do |todo| %>
+<!--TASKS IS THE ARRAY CONTAINS TODO OBJECTS AND WE ITERATE OVER EACH OF THESE OBJECTS AND RETURN THEM
+TO THE BROWSER -- >
+
+
+<% if todo.done %>
+<li class="strike"> 
+<% else %>
+<li>
+<% end %>
+<!--THIS SECTION DECIDES THE FORMATTING OF TEXT DISPLAYED IN THE LIST ELEMENT IF IT IS DONE AND LINE
+THROUGH IS USED ON IT -->
+
+
+
+<%= todo.task %>
+<!--THIS RETURNS THE TASK INSTANCE VARIABLE OF THE TODO OBJECT STORED IN TASKS ARRAY-->
+
+<form action="/done" method="POST">
+	<!--THIS FORM CALLS THE /DONE GET WRITTEN APP.RB-->
+
+<input type="hidden" name="task" value="<%= todo.task %>">
+<!--
+THIS INPUT TAG IS NOT DISPLAYED AND SENDS TASK AS PARAMETER THROUGH PARAMS TO /DONE METHOD WHICH CHANGES THE
+STATE OF THE INSTANCE VARIABLE DONE OF THE TODO OBJECT CURRENTLY BEING ACCESSED 
+-->
+
+
+<% if todo.done %>
+<input type="submit" value="UnDone">
+<% else %>
+<input type="submit" value="Done">
+<% end %>
+<!--THIS DISPLAYS THE BUTTON ON WHICH DONE OR UNDONE IS WRITTEN BASED ON THE VALUE OF
+DONE INSTANCE VARIABLE OF TODO OBJECT-->
+
+</form>
+
+</li>
+
+<% end %>
+
+</ul>
+
+<style type="text/css">
+.strike {
+	text-decoration: line-through;
+}	
+</style>
+
+
+
+</body>
+</html>
+

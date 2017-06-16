@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Todo App</title>
+</head>
+<body>
+<form action="/add" method="POST">
+
+<input type="text" name="task" />
+
+<br>
+<input type = "checkbox" value = "important" name = "important"> important<br>
+<input type = "checkbox" value = "urgent" name = "urgent">urgent<br>
+<input type="submit" value="Add Task" />
+
+</form>
+
+
+<ul>
+
+
+<% tasks.each do |todo| %>
+<% if todo.done %>
+<% if todo.important == "important" && todo.urgent=="urgent" %>
+<li class="strikethrough , both">
+<% elsif todo.important == "important" %>
+<li class="strikethrough , important">
+	
+	<% elsif todo.urgent=="urgent" %>
+<li class="strikethrough , urgent">
+	<%else%>
+<li class="strikethrough">
+	<%end%>
+<% else %>
+<% if todo.important == "important" && todo.urgent=="urgent" %>
+<li class="both">
+<% elsif todo.important == "important" %>
+<li class="important">
+	
+	<% elsif todo.urgent=="urgent" %>
+<li class="urgent">
+	<%else%>
+<li>
+	<%end%>
+<% end %>
+
+
+
+<%= todo.task %>
+
+<form action="/done" method="POST">
+
+<input type="hidden" name="task" value="<%= todo.task %>">
+<% if todo.done %>
+
+<input type="submit" value="UnDone">
+<% else %>
+<input type="submit" value="Done">
+<% end %>
+
+</form>
+
+</li>
+
+<% end %>
+
+</ul>
+
+<style type="text/css">
+.strikethrough {
+	text-decoration: line-through;
+}
+
+.both{
+	color: blue;
+}
+.important{
+	color: red;
+}
+.urgent{
+	color: green;
+}
+	
+</style>
+
+
+
+</body>
+</html>
+
